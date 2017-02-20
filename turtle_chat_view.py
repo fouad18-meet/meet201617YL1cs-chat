@@ -48,6 +48,13 @@ class TextBox(TextInput):
         self.writer.goto(10, self.height - 15)
         self.writer.clear()
         self.writer.write(self.new_msg)
+
+class SendButton(Button):
+    def __init__(self,view):
+        super(SendButton,self).__init__(pos=(0,-150))
+        self.view=view
+    def fun(self,x=None,y=None):
+        self.view.send_msg()
         
         
 
@@ -130,9 +137,10 @@ class View:
         ###
         #Store the username and partner_name into the instance.
         ###
-
+        self.username=username
+        self.partner_name=partner_name
         #Make a new client object and store it in this instance.
-
+        self.my_client=Client
         #Set screen dimensions using turtle.setup
         #You can get help on this function, as with other turtle functions,
         #by typing
@@ -141,7 +149,7 @@ class View:
         #   help(turtle.setup)
         #
         #at the Python shell.
-
+        turtle.setup(width = self._SCREEN_WIDTH, height = self._SCREEN_HEIGHT)
         #This list will store all of the messages.
         #You can add strings to the front of the list using
         #   self.msg_queue.insert(0,a_msg_string)
@@ -159,7 +167,9 @@ class View:
         #Create a TextBox instance and a SendButton instance and
         #Store them inside of this instance
         ###
-
+        self.textbox = TextBox()
+        self.snd_btn = SendButton(self)
+        
         ###
         #Call your setup_listeners() function, if you have one,
         #and any other remaining setup functions you have invented.

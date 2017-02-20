@@ -17,6 +17,9 @@ class TextBox(TextInput):
         self.writer.goto(10, self.height - 15)
         self.writer.clear()
         self.writer.write(self.new_msg)
+        if len(self.get_msg()) % self.letters_per_line == 0:
+            self.new_msg=self.new_msg+ "\r"
+        print(self.get_msg())
         
         
 
