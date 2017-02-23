@@ -5,125 +5,50 @@
 #                                   IMPORTS                                         #
 #####################################################################################
 
-##from turtle_chat_client import Client
-##import turtle
-##from turtle_chat_widgets import Button , TextInput
-##class TextBox(TextInput):
-##    def draw_box(self):
-##        d_t_b=turtle.clone() #d_t_b = drawing the box
-##        d_t_b.penup()
-##        d_t_b.goto(self.width, self.height)
-##        d_t_b.pendown()
-##        d_t_b.goto(self.width, 0)
-##        d_t_b.goto(0, 0)
-##        d_t_b.goto(0, self.height)
-##        d_t_b.goto(self.width, self.height)
-##    def write_msg(self):
-##        
-##        self.writer.write("hi")
-##        self.writer.clear("hi")
-##        
-##        
-##        
-##        
-##
-#db=TextBox()
-
 from turtle_chat_client import Client
 import turtle
 from turtle_chat_widgets import Button , TextInput
-
-
+turtle.hideturtle()
 class TextBox(TextInput):
 
     def __init__(self):
 
         super(TextBox, self).__init__(pos = (0,-50))
-        self.font = ('fangsongti',10,'bold')
-        #self.Msg_box()
-
 
     def draw_box(self):
         d_t_b=turtle.clone() #d_t_b = drawing the box
+        d_t_b.hideturtle()
         d_t_b.penup()  
-##        d_t_b.goto(self.width, self.height)
-##        d_t_b.pendown()
-##        d_t_b.goto(self.width, 0)
-##        d_t_b.goto(0, 0)
-##        d_t_b.goto(0, self.height)
-##        d_t_b.goto(self.width, self.height)
         d_t_b.goto(-100,-100)
         d_t_b.pendown()
         d_t_b.goto(-100,0)
         d_t_b.goto(100,0)
         d_t_b.goto(100,-100)
         d_t_b.goto(-100,-100)
-
-
-
-
+        self.draw_box_2()
+    def draw_box_2(self):
+        d_t_b_2=turtle.clone()
+        d_t_b_2.ht()
+        d_t_b_2.penup()
+        d_t_b_2.goto(-100,220)
+        d_t_b_2.pendown()
+        d_t_b_2.goto(100,220)
+        d_t_b_2.goto(100,120)
+        d_t_b_2.goto(-100,120)
+        d_t_b_2.goto(-100,220)
 
 
     def write_msg(self):       
         self.writer.clear()
-        self.writer.write(self.new_msg , font = self.font)
+        self.writer.goto(-90,-30)
+        message_to_write = self.new_msg
+        if len(message_to_write) >= 25:
+            message_to_write = message_to_write[0:25] + '\r' + message_to_write[25:]
+        self.writer.write(message_to_write , font = ('fangsongti',10,'bold'))
         self.setup_listeners()
         print(self.new_msg)
         self.writer.goto(-93, self.height - 120)
-        
-
-
-
-
-##        self.my_pos = self.writer.pos()
-##        self.x_pos = self.my_pos[0]
-##        
-
-##        self.setup_listeners()
-##        print(self.new_msg)
-##        self.writer.goto(-93, self.height - 125)
-##    
-
-##        self.my_position = self.writer.pos()
-##        self.x_position = self.my_pos[0]
-
-##file.write(line1)
-##file.write("\n")
-##file.write(line2)
-##file.write("\n")
-##file.write(line3)
-##file.write("\n")
-
-        
-##        self.my_pos = self.writer.pos()
-##        self.x_pos = self.my_pos[50]
-
-##        if self.x_pos >= 90:
-##            self.writer.write(self.new_msg + "\r" , font = self.font)
-##
-##        else:
-##            self.writer.write(self.new_msg , font = self.font)
-####    
-##          
-
-
-
-
-          #self.setup_listeners()
-##        print(self.new_msg)
-##        self.writer.goto(-93, self.height - 115)
-##        self.writer.clear()
-##        self.writer.write(self.new_msg , font = self.font)
-##        self.my_position = self.writer.pos()
-##        self.x_position = self.my_pos[0]
-
-##        if self.new_msg >=90:
-##            self.writer.write(self.new_msg + "\r" , font = self.font)
-##
-##        else:
-##            self.writer.write(self.new_msg , font = self.font)
-##    
-            
+          
 
 class SendButton(Button):
     def __init__(self,view):
@@ -143,16 +68,8 @@ class SendButton(Button):
         self.write_snd.onclick(self.fun)
         turtle.listen()
 
-
-
-
-
     def fun(self,x=None,y=None):
         self.view.send_msg()
-        
-        
-
-#db = TextBox()
         
 
 #import the turtle module
@@ -261,24 +178,20 @@ class View:
         #Create a TextBox instance and a SendButton instance and
         #Store them inside of this instance
         ###
-##        self.textbox = TextBox()
-##        self.snd_btn = SendButton(self)
-##        self.Display_turtle_setup()
+        self.textbox = TextBox()
+        self.snd_btn = SendButton(self)
+        
         ###
         #Call your setup_listeners() function, if you have one,
         #and any other remaining setup functions you have invented.
         ###
-##        self.display = turtle.clone()
-##        self.display.penup()
-##        self.display.speed(0)
-##        self.display.pencolor('blue')
-##        self.display.hideturtle()
-##        self.display.goto(-self.textbox.width/2+10+self.textbox.pos[0],200)
-##
-##        self.setup_listeners()
-##        turtle.listen()
-##        
+        self.display = turtle.clone()
+        self.display.penup()
+        self.display.speed(0)
+        self.display.hideturtle()
+        self.display.goto(-self.textbox.width/2+10+self.textbox.pos[0],200)
 
+        self.setup_listeners()
 
 
     def send_msg(self):
@@ -291,10 +204,12 @@ class View:
         It should call self.display_msg() to cause the message
         display to be updated.
         '''
-##        self.my_client.send(self.textbook.new_msg)
-##        self.msg_queue.insert(0,self.textbox.new_msg)
-##        self.textbox.clear_msg()
-##        self.display_msg()
+    
+        self.my_client.send(self.textbox.new_msg)
+        self.msg_queue.insert(0,self.textbox.new_msg)
+        self.textbox.clear_msg()
+        self.display_msg()
+        
 
     def get_msg(self):
         return self.textbox.get_msg()
@@ -310,7 +225,8 @@ class View:
 
         Then, it can call turtle.listen()
         '''
-        pass
+        turtle.onkeypress(self.snd_btn.fun, 'Return')
+        turtle.listen()
 
     def msg_received(self,msg):
         '''
@@ -325,7 +241,7 @@ class View:
         show_this_msg=self.partner_name+' says:\r'+ msg
         #Add the message to the queue either using insert (to put at the beginning)
         #or append (to put at the end).
-        #
+        self.msg_queue.insert(0,show_this_msg)
         #Then, call the display_msg method to update the display
 
     def display_msg(self):
@@ -333,7 +249,8 @@ class View:
         This method should update the messages displayed in the screen.
         You can get the messages you want from self.msg_queue
         '''
-        pass
+        self.display.clear()
+        self.display.write(self.msg_queue[0], font = ('fangsongti',10,'bold'))
 ##############################################################
 ##############################################################
 
