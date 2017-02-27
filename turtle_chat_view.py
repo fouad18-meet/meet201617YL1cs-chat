@@ -243,7 +243,7 @@ class View:
         #or append (to put at the end).
         self.msg_queue.insert(0,show_this_msg)
         #Then, call the display_msg method to update the display
-
+        self.display_msg()
     def display_msg(self):
         '''
         This method should update the messages displayed in the screen.
