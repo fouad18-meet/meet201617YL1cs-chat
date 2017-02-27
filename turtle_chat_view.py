@@ -194,6 +194,9 @@ class View:
         self.setup_listeners()
 
 
+        turtle.Screen().bgpic("lebron.gif")
+
+
     def send_msg(self):
         '''
         You should implement this method.  It should call the
