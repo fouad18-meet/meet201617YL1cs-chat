@@ -16,38 +16,42 @@ class TextBox(TextInput):
         super(TextBox, self).__init__(pos = (0,-50))
 
     def draw_box(self):
-        d_t_b=turtle.clone() #d_t_b = drawing the box
-        d_t_b.hideturtle()
-        d_t_b.penup()  
-        d_t_b.goto(-100,-100)
-        d_t_b.pendown()
-        d_t_b.goto(-100,0)
-        d_t_b.goto(100,0)
-        d_t_b.goto(100,-100)
-        d_t_b.goto(-100,-100)
+        self.d_t_b=turtle.clone() #d_t_b = drawing the box
+        self.d_t_b.hideturtle()
+        self.d_t_b.penup()
+        self.d_t_b.speed(0)
+        self.d_t_b.pencolor("white")
+        self.d_t_b.goto(-100,-100)
+        self.d_t_b.pendown()
+        self.d_t_b.goto(-100,0)
+        self.d_t_b.goto(100,0)
+        self.d_t_b.goto(100,-100)
+        self.d_t_b.goto(-100,-100)
         self.draw_box_2()
     def draw_box_2(self):
-        d_t_b_2=turtle.clone()
-        d_t_b_2.ht()
-        d_t_b_2.penup()
-        d_t_b_2.goto(-100,220)
-        d_t_b_2.pendown()
-        d_t_b_2.goto(100,220)
-        d_t_b_2.goto(100,120)
-        d_t_b_2.goto(-100,120)
-        d_t_b_2.goto(-100,220)
+        self.d_t_b_2=turtle.clone()
+        self.d_t_b_2.ht()
+        self.d_t_b_2.speed(0)
+        self.d_t_b_2.penup()
+        self.d_t_b_2.pencolor("white")
+        self.d_t_b_2.goto(-100,220)
+        self.d_t_b_2.pendown()
+        self.d_t_b_2.goto(100,220)
+        self.d_t_b_2.goto(100,120)
+        self.d_t_b_2.goto(-100,120)
+        self.d_t_b_2.goto(-100,220)
 
 
     def write_msg(self):       
         self.writer.clear()
-        self.writer.goto(-90,-30)
-        message_to_write = self.new_msg
-        if len(message_to_write) >= 25:
-            message_to_write = message_to_write[0:25] + '\r' + message_to_write[25:]
-        self.writer.write(message_to_write , font = ('fangsongti',10,'bold'))
-        self.setup_listeners()
-        print(self.new_msg)
-        self.writer.goto(-93, self.height - 120)
+        self.writer.goto(-90,-90)
+        self.writer.pencolor("white")
+        
+        if len(self.new_msg)%23 == 0:
+            
+            self.new_msg +='\r'
+            
+        self.writer.write(self.new_msg , font = ('fangsongti',10,'bold'))
           
 
 class SendButton(Button):
@@ -60,10 +64,11 @@ class SendButton(Button):
     def Write_send(self):
         self.write_snd = turtle.clone() # w:write , s:send
         self.write_snd.penup()
+        self.write_snd.speed(0)
         self.write_snd.pencolor("white")
         self.write_snd.hideturtle()
         self.write_snd.goto(-20,-160)
-        self.write_snd.write('SEND','SEND')
+        self.write_snd.write('SEND')
                 
         self.write_snd.onclick(self.fun)
         turtle.listen()
@@ -140,7 +145,7 @@ class View:
     _SCREEN_HEIGHT=600
     _LINE_SPACING=round(_SCREEN_HEIGHT/2/(_MSG_LOG_LENGTH+1))
 
-    def __init__(self,username='Me',partner_name='Partner'):
+    def __init__(self,username='I',partner_name='Partner'):
         '''
         :param username: the name of this chat user
         :param partner_name: the name of the user you are chatting with
@@ -186,10 +191,11 @@ class View:
         #and any other remaining setup functions you have invented.
         ###
         self.display = turtle.clone()
+        self.display.pencolor("white")
         self.display.penup()
         self.display.speed(0)
         self.display.hideturtle()
-        self.display.goto(-self.textbox.width/2+10+self.textbox.pos[0],200)
+        self.display.goto(-self.textbox.width/2+10+self.textbox.pos[0],130)
 
         self.setup_listeners()
 
@@ -207,9 +213,10 @@ class View:
         It should call self.display_msg() to cause the message
         display to be updated.
         '''
-    
-        self.my_client.send(self.textbox.new_msg)
-        self.msg_queue.insert(0,self.textbox.new_msg)
+
+        self.show_this = self.username + ' said:\r' + self.textbox.new_msg
+        self.my_client.send(self.show_this)
+        self.msg_queue.insert(0,self.show_this)
         self.textbox.clear_msg()
         self.display_msg()
         
